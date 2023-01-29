@@ -4,6 +4,7 @@ using Heuristics.TechEval.Core;
 using Heuristics.TechEval.Web.Models;
 using Heuristics.TechEval.Core.Models;
 using Newtonsoft.Json;
+using System;
 
 namespace Heuristics.TechEval.Web.Controllers {
 
@@ -25,7 +26,8 @@ namespace Heuristics.TechEval.Web.Controllers {
 		public ActionResult New(NewMember data) {
 			var newMember = new Member {
 				Name = data.Name,
-				Email = data.Email
+				Email = data.Email,
+				LastUpdated = DateTime.Now
 			};
 
 			_context.Members.Add(newMember);

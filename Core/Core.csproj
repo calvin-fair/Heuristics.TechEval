@@ -50,6 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\202301282025065_AddedTimestamp.cs" />
+    <Compile Include="Migrations\202301282025065_AddedTimestamp.designer.cs">
+      <DependentUpon>202301282025065_AddedTimestamp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Models\Member.cs" />
@@ -67,6 +71,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201711142244515_Initial.resx">
       <DependentUpon>201711142244515_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301282025065_AddedTimestamp.resx">
+      <DependentUpon>202301282025065_AddedTimestamp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
