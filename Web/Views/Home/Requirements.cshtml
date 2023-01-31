@@ -8,31 +8,36 @@
 	<div class="row">
 		<div class="col-sm-8">
 			<p>
-				This is a very simple app that provides opportunities for assessing your experience across the entire web development stack, from the database through JavaScript.
+				This is a very simple app designed to assess your experience across the entire web development stack, from the database through JavaScript.
 				Though contrived, this is representative of the types of things you would do as a developer on our product.
 			<p>
 			<p>
-				Your mission, if you choose to accept it, is to complete as many of the "requirements" at the bottom of this page as you can/want to. The goal is to
-				create a code sample that we can use as the basis for a conversation about how you approach your work.
+				Your mission, if you choose to accept it, is to show us what you're capable of by implementing as many of these "requirements" as you can/want to.
+				We will then have a code review / technical interview to talk about your solutions.
 			</p>
 			<p>
-				<b>Please don't feel obligated to spend more than 2-3 hours on this</b> (unless of course you want to).
+				<b>Please don't feel obligated to spend more than 2-3 hours on this</b>. You're welcome, even encouraged, to do as much as you need
+				to make a good impression, but we know your time is valuable. (<b>Please attempt Task 6; it's an important one to us!</b>)
 			</p>
 
-			<p><i>If you don't know how to do something, skip it. Googling for technical help is allowed. Ask clarifying questions if needed!</i></p>
+			<p><b>Skip tasks you don't know how to do. Googling for technical help is allowed. Ask clarifying questions if needed!</b></p>
 
-
+			<hr />
 			<h3>Task 1 - Implement an "edit" screen for a Member</h3>
 			<p>
 				The <a href="/Members/List">Member List</a> page displays a list of people. It currently has a button for creating a new Member, but there is
 				no "edit" functionality.
 			</p>
 			<ol>
-				<li>Add something to the grid that, when clicked, displays a popup containing the current member details and allows them to be edited.</li>
+				<li>Add something to the grid that, when clicked, <b>displays a popup</b> containing the current member details and allows them to be edited.</li>
 				<li>After saving changes, the grid should be updated to display the new data.</li>
 			</ol>
+			<div class="panel panel-info">
+				<div class="panel-heading">Things to consider</div>
+				<div class="panel-body">Is this something you'd keep DRY? Why or why not?</div>
+			</div>
 
-
+			<hr />
 			<h3>Task 2 - Validation</h3>
 			<p>
 				The "New Member" popup doesn't do any sort of data validation. We really should require valid data; "garbage in, garbage out".
@@ -40,8 +45,12 @@
 			<ol>
 				<li>Add validation to require a Name and Email when adding (or editing) a Member.</li>
 			</ol>
+			<div class="panel panel-info">
+				<div class="panel-heading">Things to consider</div>
+				<div class="panel-body">Is there a specific validation framework you've used before? What did you like about it?</div>
+			</div>
 
-
+			<hr />
 			<h3>Task 3 - Prevent duplicate email addresses</h3>
 			<p>
 				Currently, there are no business rules governing validity of member data. That's silly.
@@ -50,8 +59,12 @@
 				<li>Modify the <a href="/Members/List">Member List</a> page to prevent the creation (or editing) of members that would create duplicate email addresses in the system.</li>
 				<li>Can you write unit or integration tests for this?</li>
 			</ol>
+			<div class="panel panel-info">
+				<div class="panel-heading">Things to consider</div>
+				<div class="panel-body">Pretend you're implementing this against a very large database. What performance issues would you account for?</div>
+			</div>
 
-
+			<hr />
 			<h3>Task 4 - Categorization of Members</h3>
 			<p>
 				This application currently displays lists of Members and lists of Categories, but they are not connected yet. We would like to be able to
@@ -63,24 +76,51 @@
 				<li>Add "Category" as a new column to the Member List page.</li>
 				<li>Add "Member Count" as a new column to the <a href="/Categories/List">Category List</a> page, showing the number of Members in that Category.</li>
 			</ol>
+			<div class="panel panel-info">
+				<div class="panel-heading">Technical tip</div>
+				<div class="panel-body">If you haven't used an ORM before, try a web search for "add foreign key relationship Entity Framework"</div>
+			</div>
 
-
+			<hr />
 			<h3>Task 5 - Sorting and Filtering</h3>
 			<p>
 				Neither of the list pages currently support any kind of sorting or paging. Users are demanding such conveniences! What to do?
 			</p>
 			<ol>
 				<li>Clicking on a column header on the list pages should sort by that column.</li>
-				<li>Is there a way to support filtering?</li>
-				<li>When would you use client-side vs server-side filtering/sorting?</li>
 			</ol>
+			<div class="panel panel-info">
+				<div class="panel-heading">Things to consider</div>
+				<div class="panel-body">How would you implement filtering as well? When would you choose client-side filtering/sorting over server-side?</div>
+			</div>
 
-
-			<h3>Task 6 - Your Choice</h3>
+			<hr />
+			<h3>Task 6 - SQL</h3>
 			<p>
-				There are lots of ways that this sample app could be improved. The code could be organized differently, it could be refactored,
-				it could be made prettier and more user-friendly. Find something to improve, and then tell us why your design is better!
+				Restore the <b>SqlAssessment.bak</b> file to a SQL Server (or SQL Server Express) instance. (<i>
+					If you're using the VM we provided, this
+					has already been done for you.
+				</i>)
 			</p>
+			<p>
+				That database contains two tables: <b>MEMBER</b> and <b>MEMBER_ADDRESS</b>.<br /><br />
+				The <b>MEMBER_ADDRESS</b> table contains a "LABEL" column so that we can track multiple different addresses for each person, such
+				as a "Home" and "Work" address.<br /><br />
+				By business rule, a Member should only have ONE address per label. However, some of the existing data violates this rule; some Members
+				have multiple Addresses with the same label.<br /><br />
+				Your task is to:
+				<ol>
+					<li>Identify the Members with duplicate addresses</li>
+					<li>Delete duplicate data that violates the business rule. For each label with multiple addresses, keep the record with the most recent MODIFIED_ON date.</li>
+					<li>Create a unique index preventing duplicates from being created in the future.</li>
+				</ol>
+			</p>
+			<div class="panel panel-danger">
+				<div class="panel-heading">We'd really like you to do this task!</div>
+				<div class="panel-body">If you don't have time to do everything, skip one of the coding tasks above and do this instead. We hire full stack engineers, 
+				so we want an idea of your SQL skills as well as your C# skills.<br /><br />
+				<b>Submit the scripts used to do this as part of your code sample</b></div>
+			</div>
 		</div>
 		<div class="col-sm-4">
 
