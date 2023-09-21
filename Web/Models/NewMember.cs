@@ -11,5 +11,6 @@ namespace Heuristics.TechEval.Web.Models {
 	public class NewMember {
 		public string Name { get; set; }
 		public string Email { get; set; }
-	}
+        public string Category { get; set; }
+    }
 }

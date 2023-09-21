@@ -8,60 +8,128 @@
 
 <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#NewMemberModal">Add Member</button>
 <table class="table table-striped table-bordered table-hover">
-	<thead>
-		<tr>
-			<th scope="col">#</th>
-			<th scope="col">Name</th>
-			<th scope="col">Email</th>
-		</tr>
-	</thead>
-	<tbody>
-	@foreach (var member in Model) {
-		<tr>
-			<th scope="row">@member.Id</th>
-			<td>@member.Name</td>
-			<td>@member.Email</td>
-		</tr>
-	}
-	</tbody>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in Model)
+        {
+            <tr>
+                <th scope="row">@member.Id</th>
+                <td>@member.Name</td>
+                <td>@member.Email</td>
+                <td>@member.Category</td>
+                <td>
+                    <button type="button" class="btn btn-primary pusll-left editBtn" data-toggle="modal" data-id="@member.Id" data-name="@member.Name" data-email="@member.Email" data-category="@member.Category">Edit</button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 <div class="modal fade" id="NewMemberModal">
-	<div class="modal-dialog" role="document">
-		<form id="NewMemberForm" action="/Members/New" method="post">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">New Member</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="Name">Member Name</label>
-						<input type="text" class="form-control" id="Name" name="Name" placeholder="John Smith" />
-					</div>
-					<div class="form-group">
-						<label for="Email">Email Address</label>
-						<input type="email" class="form-control" id="Email" name="Email" placeholder="you@awesome.com" />
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="submit" class="btn btn-primary" value="Save" />
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="modal-dialog" role="document">
+        <form id="NewMemberForm" action="/Members/New" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Member</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Name">Member Name</label>
+                        <input type="text" class="form-control" id="Name" name="Name" placeholder="John Smith" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email Address</label>
+                        <input type="email" class="form-control" id="Email" name="Email" placeholder="you@awesome.com" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Member Category</label>
+                        <input type="text" class="form-control" id="Category" name="Category" placeholder="Engineering" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
+<div class="modal fade" id="EditMemberModal">
+    <div class="modal-dialog" role="document">
+        <form id="EditMemberForm" action="/Members/Edit" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Member</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Id">Member Id</label>
+                        <input type="text" class="form-control" id="Edit-Id" name="Id" placeholder="3000" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Member Name</label>
+                        <input type="text" class="form-control" id="Edit-Name" name="Name" placeholder="John Smith" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email Address</label>
+                        <input type="email" class="form-control" id="Edit-Email" name="Email" placeholder="you@awesome.com" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Member Category</label>
+                        <input type="text" class="form-control" id="Edit-Category" name="Category" placeholder="Engineering" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <script type="text/javascript">
-	$(document).ready(function () {
-		$("#NewMemberForm").ajaxForm({
-			success: function (formData, jqForm, options) {
-				// sure would be nice if we didn't have to reload the whole page...
-				document.location.reload();
-			}
-		});
-	});
+    $(document).ready(function () {
+        $("#NewMemberForm").ajaxForm({
+            success: function (formData, jqForm, options) {
+                // sure would be nice if we didn't have to reload the whole page...
+                document.location.reload();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on("click", ".editBtn", openEditModal);
+    });
+
+    function openEditModal() {
+        let memberEmail = $(this).data("email");
+        let memberId = $(this).data("id");
+        let memberName = $(this).data("name");
+        let memberCategory = $(this).data("category");
+
+        console.log(`ID: ${memberId} - Email: ${memberEmail} - Name: ${memberName}`);
+        document.getElementById('Edit-Email').setAttribute('value', memberEmail);
+        document.getElementById('Edit-Id').setAttribute('value', memberId);
+        document.getElementById('Edit-Name').setAttribute('value', memberName);
+        document.getElementById('Edit-Category').setAttribute('value', memberCategory);
+        $("#EditMemberModal").modal();
+    }
 </script>
