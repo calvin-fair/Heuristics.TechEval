@@ -8,16 +8,18 @@
 
 <table class="table table-striped table-bordered table-hover">
 	<thead>
-	<tr>
-		<th scope="col">#</th>
-		<th scope="col">Name</th>
-	</tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Member Count</th>
+        </tr>
 	</thead>
 	<tbody>
 	@foreach (var member in Model) {
 		<tr>
-			<th scope="row">@member.Id</th>
+			<td scope="row">@member.Id</td>
 			<td>@member.Name</td>
+			<td>@member.MemberCount</td>
 		</tr>
 	}
 	</tbody>
